@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 				break;
 			case 4: if (param == 0)
 					{
-						printf("Division by zero\n", i);
+						printf("Division by zero\n");
 						return 5;
 					}
 					sum = sum / param;
