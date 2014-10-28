@@ -42,7 +42,7 @@ int main(int argc, char * argv[])
 	}
 
 	bool firstNumber = true;
-	for (int i = 1; i < param; ++i) 
+	for (int i = 1; i <= param; ++i) 
 	{
 		if (i % SumDigits(i) == 0)
 			if (firstNumber) 
@@ -51,7 +51,10 @@ int main(int argc, char * argv[])
 				firstNumber = false;
 			}
 			else
+			{
 				printf(", %d", i);
+			}
+				
 	}
 	return 0;
 }

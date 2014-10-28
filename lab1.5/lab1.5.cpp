@@ -14,29 +14,43 @@ double StringToDouble(const char * str, bool & err)
 	return param;
 }
 
-double CalculateDistance(double v, double angle) 
+double DegreeToRadian(double degree)
 {
-	if (v < 0.0)
+	return degree * M_PI / 180;
+}
+
+double CalculateDistance(double velocity, double angle) 
+{
+	if (velocity < 0.0)
 		return 0.0;
 	else
-		return pow(v,2)*sin(M_PI*angle/90)/9.8;
+		return pow(velocity, 2) * sin(2 * DegreeToRadian(angle)) / 9.8;
 }
 
-double EnterValue(string message, bool & finish, bool & err) 
+double EnterValue(const string message, bool & finish) 
 {
-	string i;
-	string ex = "exit";
+	string value;
+	const string ex = "exit";
 	finish = false;
-	cout << message;
-	cin >> i;
-	if (i.compare(ex)==0) 
-	{ 
-		finish = true;
-		return 0;
-	}
-	return StringToDouble(i.c_str(), err);
+	double result = 0;
+	bool err = false;
+	do
+	{
+		cout << message;
+		cin >> value;
+		if (value == ex)
+		{ 
+			finish = true;
+			return 0;
+		}
+		result = StringToDouble(value.c_str(), err);
+		if (err)
+		{
+			cout << "You entered incorrect value\n";
+		}
+	} while (err);
+	return result;
 }
-
 
 int main(int argc, char * argv[]) 
 {
@@ -53,18 +67,19 @@ int main(int argc, char * argv[])
 
 	do
 	{
-		double v = EnterValue("Enter v0 (or type 'exit') > ", finish, err);
-		double a;
-		if (!(finish || err))
-			a = EnterValue("Enter a0 (or type 'exit') > ", finish, err);
-		if (!(finish || err))
-			cout << "Distance is: " << CalculateDistance(v, a) << "\n";
-	} while (!(finish || err));
+		double velocity = EnterValue("Enter initial velocity (or type 'exit') > ", finish);
+		double angle;
+		if (!finish)
+		{
+			angle = EnterValue("Enter initial angle (or type 'exit') > ", finish);
+		}
+		if (!finish)
+		{
+			cout << "Distance is: " << CalculateDistance(velocity, angle) << "\n";
+		}
+	} while (!finish);
 
-	if (err)
-		cout << "You entered incorrect value\n";
-	else
-		cout << "Goodbye\n";
+	cout << "Goodbye\n";
 	return 0;
 }
 

@@ -41,3 +41,28 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+Backup/lab1.sln
+Debug/*
+eval/eval.vcxproj
+eval/Release/*
+eval/eval.vcxproj.filters
+fib/fib.vcxproj
+fib/fib.vcxproj.filters
+ipch/*
+lab1.2/lab1.2.vcxproj
+lab1.2/lab1.2.vcxproj.filters
+lab1.2/Release/*
+lab1.3/lab1.3.vcxproj
+lab1.3/lab1.3.vcxproj.filters
+lab1.5/Debug/*
+lab1.5/lab1.5.vcxproj
+lab1.5/lab1.5.vcxproj.filters
+lab1.5/Release/*
+lab1.opensdf
+lab1.sdf
+lab1/lab1.vcxproj
+lab1/lab1.vcxproj.filters
+Release/*.pdb
+UpgradeLog.htm
+lab1.v12.suo
