@@ -1,16 +1,18 @@
 #include "stdafx.h"
+#include <iostream>
+using namespace std;
 
 int main(int argc, char * argv[]) 
 {
     int i;
-    for (i = 100; i > 0; i = i - 2) 
+    for (i = 100; i > 0; i -= 2) 
 	{
-        printf("%d", i);
+        cout << i;
         if (i != 2) 
 		{
-            printf(", ");
+            cout << ", ";
         }
     }
-    printf("\n");
+    cout << endl;
     return 0;
 }

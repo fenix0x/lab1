@@ -1,67 +1,59 @@
 #include "stdafx.h"
 #include "stdlib.h"
+#include <iostream>
+using namespace std;
 
-// calculates sum of the digits of i 
+// calculates Fibonacci numbers
 
-double StringToDouble(const char * str, bool & err) 
+unsigned long StringToULong(const char * str, bool & err) 
 {
 	char * pLastChar = NULL;
-	double param = strtod(str, &pLastChar);
+	unsigned long param = strtoul(str, &pLastChar, 10);
 	err = ((*str == '\0' ) || (*pLastChar != '\0' ));
 	return param;
-}
-
-int SumDigits(int i) {
-	int sum = 0;
-	// цикл продолжается до тех пор, пока число не станет равным 0  
-	while (i != 0) 
-	{
-		sum += i % 10;
-		i /= 10;
-	}
-	return sum;
 }
 
 int main(int argc, char * argv[]) 
 {
 	if (argc < 2)
 	{
-		printf("Usage: fib.exe N\n");
-		printf("	N - \n");
+		cout << "Usage: fib.exe N" << endl;
+		cout << "	N - max Fibonacci number" << endl;
 		return 0;
 	}
 
 	bool err;
-	double n = StringToDouble(argv[1], err);
+	unsigned long n = StringToULong(argv[1], err);
 	if (err) 
 	{
-		printf("Argument is not a number.\n");
+		cout << "Argument is not a number." << endl;
 		return 1;
 	}
 	if (n < 1) 
 	{
-		printf("Argument should be greater then 0.\n");
-		return 2;
+		cout << "Argument should be greater then 0." << endl;
+		return 1;
 	}
 
-	double a1 = 1;
-	double a2 = 1;
+	unsigned long prevValue = 0;
+	unsigned long nextValue = 1;
 	bool firstNumber = true;
-	for (int i = 1; (a2 < n) && (a1 <= a2); ++i)
+	for (int i = 1; (nextValue < n) && (prevValue <= nextValue); ++i)
 	{
-		if (!firstNumber) 
-			printf(", ");
-		else
-			firstNumber = false;
-		printf("%g", a2);
-		if ((i % 5) == 0)
+		if (!firstNumber)
 		{
-			printf(",\n");
-			firstNumber = true;
+			cout << ", ";
+			if ((i % 5) == 1)
+			{
+				cout << endl;
+				firstNumber = true;
+			}
 		}
-		double t = a1 + a2;
-		a1 = a2;
-		a2 = t;
+		cout << nextValue;
+		firstNumber = false;
+		unsigned long tempValue = prevValue + nextValue;
+		prevValue = nextValue;
+		nextValue = tempValue;
 	}
 
 	return 0;

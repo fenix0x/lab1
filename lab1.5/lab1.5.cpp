@@ -46,7 +46,7 @@ double EnterValue(const string message, bool & finish)
 		result = StringToDouble(value.c_str(), err);
 		if (err)
 		{
-			cout << "You entered incorrect value\n";
+			cout << "You entered incorrect value" << endl;
 		}
 	} while (err);
 	return result;
@@ -75,11 +75,11 @@ int main(int argc, char * argv[])
 		}
 		if (!finish)
 		{
-			cout << "Distance is: " << CalculateDistance(velocity, angle) << "\n";
+			cout << "Distance is: " << CalculateDistance(velocity, angle) << endl;
 		}
 	} while (!finish);
 
-	cout << "Goodbye\n";
+	cout << "Goodbye" << endl;
 	return 0;
 }
 

@@ -1,18 +1,38 @@
 #include "stdafx.h"
 #include "stdlib.h"
+#include <iostream>
+using namespace std;
 
-const int GetOperator(const char * str)
+enum ErrEval
+{
+	ERR_NO_ERROR,
+	ERR_EVEN_ARGUMENTS,
+	ERR_NOT_OPERATOR,
+	ERR_NOT_NUMBER,
+	ERR_DIV_BY_ZERO,
+};
+
+enum OperatorEval
+{
+	OPERATOR_SUM,
+	OPERATOR_SUBTR,
+	OPERATOR_MUL,
+	OPERATOR_DIV,
+	OPERATOR_UNDEF,
+};
+
+const OperatorEval GetOperator(const char * str)
 {
 	if (*str == '+')
-		return 1;
+		return OPERATOR_SUM;
 	if (*str == '-')
-		return 2;
+		return OPERATOR_SUBTR;
 	if (*str == '*')
-		return 3;
+		return OPERATOR_MUL;
 	if (*str == '/')
-		return 4;
+		return OPERATOR_DIV;
 
-	return 0;
+	return OPERATOR_UNDEF;
 }
 
 double StringToDouble(const char * str, bool & err)
@@ -27,21 +47,16 @@ int main(int argc, char* argv[])
 {
 	if (argc <= 1)
 	{
-		printf("Program calculates expression of command line arguments. \n");
+		cout << "Program calculates expression of command line arguments." << endl;
 		return 0;
-	}
-	if (argc < 3) 
-	{
-		printf("Programm accept at least 3 command line arguments.\n");
-		return 4;
 	}
 	if ((argc % 2) == 1) 
 	{
-		printf("Programm accept only odd number of command line arguments.\n");
-		return 1;
+		cout << "Program accept only odd number of command line arguments." << endl;
+		return ERR_EVEN_ARGUMENTS;
 	}
 	double sum = 0.0;
-	int exprOperator = 1;
+	OperatorEval exprOperator = OPERATOR_SUM;
 	double param = 0.0;
 	for (int i = 1; i < argc; ++i)
 	{
@@ -49,36 +64,42 @@ int main(int argc, char* argv[])
 		if ((i % 2) == 0) 
 		{
 			exprOperator = GetOperator(argv[i]);
-			if (exprOperator == 0) {
-				printf("Argument #%d should be + - * or /.\n", i);
-				return 2;
+			if (exprOperator == OPERATOR_UNDEF) {
+				cout << "Argument #" << i << " should be + - * or /." << endl;
+				return ERR_NOT_OPERATOR;
 			}
-			printf(" %s", argv[i]);
-		} else
+			cout << " " << argv[i];
+		} 
+		else
 		{
 			param = StringToDouble(argv[i], err);
 			if (err)
 			{
-				printf("Argument #%d is not a number.\n", i);
-				return 3;
+				cout << "Argument #" << i << " is not a number." << endl;
+				return ERR_NOT_NUMBER;
 			}
 			switch (exprOperator)
 			{
-			case 1: sum = sum + param;
+			case OPERATOR_SUM: 
+				sum = sum + param;
 				break;
-			case 2: sum = sum - param;
+			case OPERATOR_SUBTR: 
+				sum = sum - param;
 				break;
-			case 3: sum = sum * param;
+			case OPERATOR_MUL: 
+				sum = sum * param;
 				break;
-			case 4: if (param == 0)
-					{
-						printf("Division by zero\n");
-						return 5;
-					}
-					sum = sum / param;
-					break;
+			case OPERATOR_DIV: 
+				if (param == 0)
+				{
+					cout << " " << param;
+					cout << endl << "Division by zero" << endl;
+					return ERR_DIV_BY_ZERO;
+				}
+				sum = sum / param;
+				break;
 			}
-			printf(" %6.3f", param);
+			cout << " " << param;
 		}
 
 	}
